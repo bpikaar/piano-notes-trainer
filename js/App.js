@@ -99,7 +99,8 @@ export class App {
         if (nextNote) {
             this.notation.renderNote(nextNote, {
                 showNoteNames: this.gameState.showNoteNames,
-                showFingering: this.gameState.showFingering
+                showFingering: this.gameState.showFingering,
+                isDualMode: this.gameState.isDualMode
             });
             this.ui.showFeedback("Play the note below");
         }

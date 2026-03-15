@@ -8,21 +8,53 @@ export class NotationManager {
 
     /**
      * @param {any} currentNote
-     * @param {{ showNoteNames: boolean; showFingering: boolean; }} settings
+     * @param {{ showNoteNames: boolean; showFingering: boolean; isDualMode?: boolean; }} settings
      */
-    renderNote(currentNote, settings = { showNoteNames: false, showFingering: false }) {
+    renderNote(currentNote, settings = { showNoteNames: false, showFingering: false, isDualMode: false }) {
         const div = document.getElementById(this.elementId);
         if (!div || !currentNote) return;
         
         div.innerHTML = ""; // Clear previous
 
         const renderer = new this.vf.Renderer(div, this.vf.Renderer.Backends.SVG);
-        renderer.resize(200, 150);
+        const isDual = settings.isDualMode;
+        
+        // Resize based on mode
+        if (isDual) {
+            renderer.resize(250, 250);
+        } else {
+            renderer.resize(200, 150);
+        }
+        
         const context = renderer.getContext();
 
-        const stave = new this.vf.Stave(10, 40, 180);
-        stave.addClef(currentNote.clef);
-        stave.setContext(context).draw();
+        let trebleStave, bassStave;
+        let activeStave;
+
+        if (isDual) {
+            // Render Grand Staff (both hands)
+            trebleStave = new this.vf.Stave(40, 40, 180);
+            trebleStave.addClef('treble').setContext(context).draw();
+
+            bassStave = new this.vf.Stave(40, 140, 180);
+            bassStave.addClef('bass').setContext(context).draw();
+
+            // Connect them with a bracket and brace
+            const brace = new this.vf.StaveConnector(trebleStave, bassStave);
+            brace.setType(this.vf.StaveConnector.type.BRACE);
+            brace.setContext(context).draw();
+
+            const leftLine = new this.vf.StaveConnector(trebleStave, bassStave);
+            leftLine.setType(this.vf.StaveConnector.type.SINGLE_LEFT);
+            leftLine.setContext(context).draw();
+
+            activeStave = currentNote.clef === 'treble' ? trebleStave : bassStave;
+        } else {
+            // Render Single Staff (normal mode)
+            activeStave = new this.vf.Stave(10, 40, 180);
+            activeStave.addClef(currentNote.clef);
+            activeStave.setContext(context).draw();
+        }
 
         const staveNote = new this.vf.StaveNote({
             clef: currentNote.clef,
@@ -49,6 +81,6 @@ export class NotationManager {
         voice.addTickables([staveNote]);
 
         new this.vf.Formatter().joinVoices([voice]).format([voice], 100);
-        voice.draw(context, stave);
+        voice.draw(context, activeStave);
     }
 }

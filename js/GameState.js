@@ -8,6 +8,7 @@ export class GameState {
         this.showFingering = false;
         this.currentMode = null;
         this.includeAccidentals = false;
+        this.isDualMode = false;
         this.filteredNotes = [];
         
         // Timing
@@ -23,6 +24,9 @@ export class GameState {
     setMode(mode, includeAccidentals = false) {
         this.currentMode = mode;
         this.includeAccidentals = includeAccidentals;
+        // @ts-ignore
+        const modeDef = PRACTICE_MODES[this.currentMode];
+        this.isDualMode = !!(modeDef && modeDef.dual);
         this.filterNotes();
     }
 
