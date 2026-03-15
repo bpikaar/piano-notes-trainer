@@ -356,3 +356,28 @@ footer {
     white-space: nowrap;
     border: 0;
 }
+
+/* Success Feedback Improvements */
+#staff-container {
+    position: relative;
+}
+
+.success-note-label {
+    position: absolute;
+    right: 15%;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 5rem;
+    font-weight: 700;
+    color: var(--accent-light);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    pointer-events: none;
+    text-shadow: 0 0 30px rgba(99, 102, 241, 0.6);
+    z-index: 10;
+}
+
+.success-note-label.visible {
+    opacity: 1;
+    right: 18%;
+}

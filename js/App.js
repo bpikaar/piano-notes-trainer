@@ -95,8 +95,12 @@ export class App {
 
     generateNextNote() {
         const nextNote = this.gameState.generateNextNote();
+        this.ui.hideSuccessNote();
         if (nextNote) {
-            this.renderCurrentNote();
+            this.notation.renderNote(nextNote, {
+                showNoteNames: this.gameState.showNoteNames,
+                showFingering: this.gameState.showFingering
+            });
             this.ui.showFeedback("Play the note below");
         }
     }
@@ -117,9 +121,15 @@ export class App {
             this.ui.updateAvgTime(result.avgTime || 0);
             this.ui.showFeedback("Correct!", "success");
             
+            // Show the letter of the note on the right
+            const currentNote = this.gameState.currentNote;
+            if (currentNote) {
+                this.ui.showSuccessNote(currentNote.name);
+            }
+            
             setTimeout(() => {
                 this.generateNextNote();
-            }, 600);
+            }, 800); // Slightly longer pause to show the note name
         } else {
             this.ui.showFeedback("Try again", "error");
         }

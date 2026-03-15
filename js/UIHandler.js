@@ -11,7 +11,8 @@ export class UIHandler {
             accidentalsToggle: document.getElementById('landing-toggle-accidentals'),
             noteNamesToggle: document.getElementById('toggle-note-names'),
             fingeringToggle: document.getElementById('toggle-fingering'),
-            microphoneToggle: document.getElementById('toggle-microphone')
+            microphoneToggle: document.getElementById('toggle-microphone'),
+            successNoteLabel: document.getElementById('success-note-label')
         };
     }
 
@@ -100,6 +101,22 @@ export class UIHandler {
     setMicrophoneToggle(enabled) {
         if (this.elements.microphoneToggle instanceof HTMLInputElement) {
             this.elements.microphoneToggle.checked = enabled;
+        }
+    }
+
+    /** @param {string} noteName */
+    showSuccessNote(noteName) {
+        const label = this.elements.successNoteLabel;
+        if (label) {
+            label.textContent = noteName;
+            label.classList.add('visible');
+        }
+    }
+
+    hideSuccessNote() {
+        const label = this.elements.successNoteLabel;
+        if (label) {
+            label.classList.remove('visible');
         }
     }
 }
