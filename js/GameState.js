@@ -32,6 +32,7 @@ export class GameState {
 
     filterNotes() {
         if (!this.currentMode) return;
+        // @ts-ignore
         const modeDef = PRACTICE_MODES[this.currentMode];
         if (!modeDef) return;
 

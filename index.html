@@ -25,6 +25,7 @@
 
     <!-- PWA -->
     <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="assets/favicon.png">
     <meta name="theme-color" content="#0f172a">
     
     <link rel="stylesheet" href="styles.css">
@@ -42,6 +43,7 @@
 <body>
     <div id="landing-page" class="landing-page">
         <header>
+            <img src="assets/icon-512.png" class="hero-logo" alt="Piano Note Trainer Logo">
             <h1>Piano Note Trainer</h1>
             <p>Select your practice mode to begin</p>
         </header>
@@ -98,8 +100,11 @@
     </div>
 
     <div class="app-container" id="app-container" style="display: none;">
-        <header>
-            <h1>Piano Note Trainer</h1>
+        <header class="app-header">
+            <div class="brand">
+                <img src="assets/icon-512.png" class="brand-logo-small" alt="Logo">
+                <h1>Note Trainer</h1>
+            </div>
             <div id="status-container">
                 <div id="midi-status" class="status-badge">
                     <span class="indicator"></span>
