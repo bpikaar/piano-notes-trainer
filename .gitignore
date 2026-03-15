@@ -1,0 +1,8 @@
+.vscode
+.DS_Store
+.idea
+.gemini
+.agent
+
+node_modules
+.env

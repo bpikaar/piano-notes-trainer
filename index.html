@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piano Note Trainer</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <script defer src="https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js"></script>
+</head>
+
+<body>
+    <div id="landing-page" class="landing-page">
+        <header>
+            <h1>Piano Note Trainer</h1>
+            <p>Select your practice mode to begin</p>
+        </header>
+
+        <div class="modes-grid">
+            <div class="mode-card" onclick="startPractice('rh-cg')">
+                <div class="mode-icon">🤚</div>
+                <h3>Right Hand</h3>
+                <p class="range">C4 - G4</p>
+                <p class="description">Basic position for the right hand.</p>
+            </div>
+            <div class="mode-card" onclick="startPractice('rh-cc')">
+                <div class="mode-icon">🤚</div>
+                <h3>Right Hand</h3>
+                <p class="range">C4 - C5</p>
+                <p class="description">Full octave for the right hand.</p>
+            </div>
+            <div class="mode-card" onclick="startPractice('lh-cg')">
+                <div class="mode-icon">✋</div>
+                <h3>Left Hand</h3>
+                <p class="range">C3 - G3</p>
+                <p class="description">Basic position for the left hand.</p>
+            </div>
+            <div class="mode-card" onclick="startPractice('lh-cc')">
+                <div class="mode-icon">✋</div>
+                <h3>Left Hand</h3>
+                <p class="range">C3 - C4</p>
+                <p class="description">Full octave for the left hand.</p>
+            </div>
+            <div class="mode-card" onclick="startPractice('both-cg')">
+                <div class="mode-icon">👐</div>
+                <h3>Both Hands</h3>
+                <p class="range">C3 - G4</p>
+                <p class="description">Simultaneous treble and bass practice.</p>
+            </div>
+            <div class="mode-card" onclick="startPractice('both-cc')">
+                <div class="mode-icon">👐</div>
+                <h3>Both Hands</h3>
+                <p class="range">C3 - C5</p>
+                <p class="description">Full range for both hands.</p>
+            </div>
+        </div>
+
+        <div class="landing-settings">
+            <div class="toggle-group">
+                <label class="switch">
+                    <input type="checkbox" id="landing-toggle-accidentals">
+                    <span class="slider round"></span>
+                </label>
+                <span class="toggle-label">Include Black Keys (Accidentals)</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="app-container" id="app-container" style="display: none;">
+        <header>
+            <h1>Piano Note Trainer</h1>
+            <div id="status-container">
+                <div id="midi-status" class="status-badge">
+                    <span class="indicator"></span>
+                    <span class="text">Checking MIDI...</span>
+                </div>
+                <div id="audio-status" class="status-badge">
+                    <span class="indicator"></span>
+                    <span class="text">Audio: Click to Start</span>
+                </div>
+                <button id="back-to-menu" class="btn-secondary" onclick="showLandingPage()">Restart</button>
+            </div>
+        </header>
+
+        <section class="settings-panel">
+            <div class="toggle-group">
+                <label class="switch">
+                    <input type="checkbox" id="toggle-note-names">
+                    <span class="slider round"></span>
+                </label>
+                <span class="toggle-label">Show Note Names</span>
+            </div>
+            <div class="toggle-group">
+                <label class="switch">
+                    <input type="checkbox" id="toggle-fingering">
+                    <span class="slider round"></span>
+                </label>
+                <span class="toggle-label">Show Fingering</span>
+            </div>
+            <div class="toggle-group">
+                <label class="switch">
+                    <input type="checkbox" id="toggle-microphone">
+                    <span class="slider round"></span>
+                </label>
+                <span class="toggle-label">Enable Microphone</span>
+            </div>
+        </section>
+
+        <main>
+            <div id="staff-container">
+                <div id="staff"></div>
+            </div>
+
+            <div class="controls-panel">
+                <div id="feedback" class="feedback-message">Play the note below</div>
+                <div class="stats">
+                    <div class="stat-item">
+                        <span class="label">Score</span>
+                        <span id="score" class="value">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="label">Avg Time</span>
+                        <span class="value"><span id="avg-time">0.00</span>s</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Connect your MIDI keyboard to start</p>
+        </footer>
+    </div>
+    <script type="module" src="main.js"></script>
+</body>
+
+</html>
