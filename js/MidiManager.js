@@ -8,15 +8,19 @@ export class MidiManager {
 
     async setup() {
         // Use JZZ as a polyfill for Safari support
-        // @ts-ignore
-        const requestMIDIAccess = window.JZZ ? window.JZZ().requestMIDIAccess : navigator.requestMIDIAccess;
-
-        if (!requestMIDIAccess) {
-            return { status: "not_supported" };
-        }
-
+        let midiAccess;
         try {
-            this.midiAccess = await requestMIDIAccess();
+            // @ts-ignore
+            if (window.JZZ && typeof window.JZZ.requestMIDIAccess === 'function') {
+                // @ts-ignore
+                midiAccess = await window.JZZ.requestMIDIAccess();
+            } else if (navigator.requestMIDIAccess) {
+                midiAccess = await navigator.requestMIDIAccess();
+            } else {
+                return { status: "not_supported" };
+            }
+
+            this.midiAccess = midiAccess;
             this.setupInputs();
             return { status: "ready" };
         } catch (err) {
