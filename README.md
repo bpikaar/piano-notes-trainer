@@ -28,7 +28,9 @@ This is a static web application. No server-side installation (Node.js/npm) is r
 1. **Select a Mode**: Choose your preferred hand and note range from the landing page.
 2. **Accidentals**: Toggle "Include Black Keys" if you want to practice sharps/flats.
 3. **Connectivity**:
-   - If using **MIDI**: Plug in your keyboard before opening the app. The "MIDI Ready" status will turn green.
+   - If using **MIDI**: Plug in your keyboard before opening the app.
+     - **Note for Safari Users**: Safari does not natively support MIDI. To use a MIDI keyboard in Safari, you must install the [Jazz-Plugin](https://jazz-soft.net/download/Jazz-Plugin/) and the [Web MIDI API extension](https://jazz-soft.net/download/Web-MIDI-API/). 
+     - The app will automatically detect these and enable MIDI support.
    - If using **Audio**: Toggle "Enable Microphone" in the settings, grant permissions, and click the screen once to start the audio engine.
 4. **Play**: A random note will appear. Play the corresponding key on your piano.
 5. **Progress**: Monitor your score and average time. Click **Restart** (Exit) to change modes.
