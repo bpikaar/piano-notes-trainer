@@ -4,7 +4,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Piano Note Trainer</title>
+    <title>Piano Note Trainer - Interactive Piano Learning App</title>
+    <meta name="description" content="Master piano note reading with real-time feedback. Connect your MIDI keyboard or use your microphone to learn music notation interactively. Support for both treble and bass clefs.">
+    <meta name="keywords" content="piano trainer, music notation, learn piano, midi piano, piano notes, note reading app, vexflow, pitch detection">
+    <meta name="author" content="Bob Pikaar">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://bobpikaar.github.io/learn-notes/">
+    <meta property="og:title" content="Piano Note Trainer - Interactive Piano Learning App">
+    <meta property="og:description" content="Master piano note reading with real-time feedback. Connect your MIDI keyboard or use your microphone to learn music notation interactively.">
+    <meta property="og:image" content="https://bobpikaar.github.io/learn-notes/assets/og-image.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://bobpikaar.github.io/learn-notes/">
+    <meta property="twitter:title" content="Piano Note Trainer - Interactive Piano Learning App">
+    <meta property="twitter:description" content="Master piano note reading with real-time feedback. Connect your MIDI keyboard or use your microphone to learn music notation interactively.">
+    <meta property="twitter:image" content="https://bobpikaar.github.io/learn-notes/assets/og-image.png">
+
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0f172a">
+    
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -58,15 +80,16 @@
             </div>
         </div>
 
-        <div class="landing-settings">
+        <section class="landing-settings" aria-labelledby="settings-heading">
+            <h2 id="settings-heading" class="sr-only">Settings</h2>
             <div class="toggle-group">
-                <label class="switch">
+                <label class="switch" aria-label="Include Black Keys Toggle">
                     <input type="checkbox" id="landing-toggle-accidentals">
                     <span class="slider round"></span>
                 </label>
                 <span class="toggle-label">Include Black Keys (Accidentals)</span>
             </div>
-        </div>
+        </section>
     </div>
 
     <div class="app-container" id="app-container" style="display: none;">
@@ -81,31 +104,31 @@
                     <span class="indicator"></span>
                     <span class="text">Audio: Click to Start</span>
                 </div>
-                <button id="back-to-menu" class="btn-secondary" onclick="showLandingPage()">Restart</button>
+                <button id="back-to-menu" class="btn-secondary" onclick="showLandingPage()" aria-label="Restart practice and back to menu">Restart</button>
             </div>
         </header>
 
-        <section class="settings-panel">
+        <section class="settings-panel" aria-label="Practice Settings">
             <div class="toggle-group">
-                <label class="switch">
-                    <input type="checkbox" id="toggle-note-names">
+                <label class="switch" aria-label="Show Note Names Toggle">
+                    <input type="checkbox" id="toggle-note-names" aria-labelledby="label-note-names">
                     <span class="slider round"></span>
                 </label>
-                <span class="toggle-label">Show Note Names</span>
+                <span class="toggle-label" id="label-note-names">Show Note Names</span>
             </div>
             <div class="toggle-group">
-                <label class="switch">
-                    <input type="checkbox" id="toggle-fingering">
+                <label class="switch" aria-label="Show Fingering Toggle">
+                    <input type="checkbox" id="toggle-fingering" aria-labelledby="label-fingering">
                     <span class="slider round"></span>
                 </label>
-                <span class="toggle-label">Show Fingering</span>
+                <span class="toggle-label" id="label-fingering">Show Fingering</span>
             </div>
             <div class="toggle-group">
-                <label class="switch">
-                    <input type="checkbox" id="toggle-microphone">
+                <label class="switch" aria-label="Enable Microphone Toggle">
+                    <input type="checkbox" id="toggle-microphone" aria-labelledby="label-microphone">
                     <span class="slider round"></span>
                 </label>
-                <span class="toggle-label">Enable Microphone</span>
+                <span class="toggle-label" id="label-microphone">Enable Microphone</span>
             </div>
         </section>
 

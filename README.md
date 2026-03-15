@@ -13,6 +13,8 @@ A modern, web-based piano note learning application. Practice reading musical no
 - **Accidentals (Black Keys)**: Toggle support for sharps and flats.
 - **Visual Hints**: Optional display for Note Names and Fingerings.
 - **Performance Tracking**: Tracks your score and average response time.
+- **PWA Support**: Installable on mobile devices for a native-like experience.
+- **Accessibility**: ARIA-labeled and semantically structured for screen reader support.
 
 ## 🛠️ Installation
 

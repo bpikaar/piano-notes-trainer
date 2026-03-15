@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://bobpikaar.github.io/learn-notes/sitemap.xml
