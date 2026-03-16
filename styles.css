@@ -429,6 +429,97 @@ footer {
 }
 
 @media (max-width: 600px) {
+    body {
+        align-items: flex-start;
+        padding: 10px 0;
+    }
+
+    .landing-page {
+        padding: 24px 14px;
+    }
+
+    .landing-page header {
+        margin-bottom: 24px;
+    }
+
+    .modes-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+
+    .mode-card {
+        padding: 14px 16px;
+    }
+
+    .mode-icon {
+        font-size: 2rem;
+        margin-bottom: 10px;
+    }
+
+    .landing-settings {
+        width: 100%;
+        padding: 14px 16px;
+        margin-top: 12px;
+    }
+
+    .app-container {
+        width: 96%;
+        border-radius: 18px;
+        padding: 20px 14px;
+        gap: 18px;
+    }
+
+    .app-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    #status-container {
+        width: 100%;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .status-badge {
+        font-size: 0.8rem;
+        padding: 7px 12px;
+    }
+
+    .settings-panel {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        padding: 12px;
+    }
+
+    .toggle-group {
+        justify-content: space-between;
+    }
+
+    .controls-panel {
+        margin-top: 24px;
+    }
+
+    .feedback-message {
+        font-size: 1.2rem;
+        margin-bottom: 14px;
+    }
+
+    .stats {
+        gap: 18px;
+    }
+
+    .stat-item .value {
+        font-size: 1.5rem;
+    }
+
+    .success-note-label {
+        font-size: 3.2rem;
+        right: 10%;
+    }
+
     .brand h1 {
         font-size: 1.2rem;
     }
