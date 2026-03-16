@@ -36,5 +36,37 @@ export const PRACTICE_MODES = {
     'lh-cg': { clef: 'bass', min: 48, max: 55 },
     'lh-cc': { clef: 'bass', min: 48, max: 60 },
     'both-cg': { dual: true, treble: { min: 60, max: 67 }, bass: { min: 48, max: 55 } },
-    'both-cc': { dual: true, treble: { min: 60, max: 72 }, bass: { min: 48, max: 60 } }
+    'both-cc': { dual: true, treble: { min: 60, max: 72 }, bass: { min: 48, max: 60 } },
+    'song-single': { song: true, dual: false },
+    'song-both': { song: true, dual: true }
+};
+
+export const SONGS = {
+    'song-single': [
+        { midi: 60, clef: 'treble' }, // C4
+        { midi: 60, clef: 'treble' }, // C4
+        { midi: 67, clef: 'treble' }, // G4
+        { midi: 67, clef: 'treble' }, // G4
+        { midi: 69, clef: 'treble' }, // A4
+        { midi: 69, clef: 'treble' }, // A4
+        { midi: 67, clef: 'treble' }, // G4
+        { midi: 65, clef: 'treble' }, // F4
+        { midi: 65, clef: 'treble' }, // F4
+        { midi: 64, clef: 'treble' }, // E4
+        { midi: 64, clef: 'treble' }, // E4
+        { midi: 62, clef: 'treble' }, // D4
+        { midi: 62, clef: 'treble' }, // D4
+        { midi: 60, clef: 'treble' }  // C4
+    ],
+    'song-both': [
+        { bassMidi: 48, trebleMidi: 60 }, // C3 + C4
+        { bassMidi: 50, trebleMidi: 62 }, // D3 + D4
+        { bassMidi: 52, trebleMidi: 64 }, // E3 + E4
+        { bassMidi: 53, trebleMidi: 65 }, // F3 + F4
+        { bassMidi: 55, trebleMidi: 67 }, // G3 + G4
+        { bassMidi: 53, trebleMidi: 65 }, // F3 + F4
+        { bassMidi: 52, trebleMidi: 64 }, // E3 + E4
+        { bassMidi: 50, trebleMidi: 62 }, // D3 + D4
+        { bassMidi: 48, trebleMidi: 60 }  // C3 + C4
+    ]
 };

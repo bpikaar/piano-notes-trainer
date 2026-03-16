@@ -5,38 +5,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Piano Note Trainer - Interactive Piano Learning App</title>
-    <meta name="description" content="Master piano note reading with real-time feedback. Connect your MIDI keyboard or use your microphone to learn music notation interactively. Support for both treble and bass clefs.">
-    <meta name="keywords" content="piano trainer, music notation, learn piano, midi piano, piano notes, note reading app, vexflow, pitch detection">
+    <meta name="description"
+        content="Master piano note reading with real-time feedback. Connect your MIDI keyboard or use your microphone to learn music notation interactively. Support for both treble and bass clefs.">
+    <meta name="keywords"
+        content="piano trainer, music notation, learn piano, midi piano, piano notes, note reading app, vexflow, pitch detection">
     <meta name="author" content="Bob Pikaar">
-    
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://bobpikaar.github.io/learn-notes/">
     <meta property="og:title" content="Piano Note Trainer - Interactive Piano Learning App">
-    <meta property="og:description" content="Master piano note reading with real-time feedback. Connect your MIDI keyboard or use your microphone to learn music notation interactively.">
+    <meta property="og:description"
+        content="Master piano note reading with real-time feedback. Connect your MIDI keyboard or use your microphone to learn music notation interactively.">
     <meta property="og:image" content="https://bobpikaar.github.io/learn-notes/assets/og-image.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://bobpikaar.github.io/learn-notes/">
     <meta property="twitter:title" content="Piano Note Trainer - Interactive Piano Learning App">
-    <meta property="twitter:description" content="Master piano note reading with real-time feedback. Connect your MIDI keyboard or use your microphone to learn music notation interactively.">
+    <meta property="twitter:description"
+        content="Master piano note reading with real-time feedback. Connect your MIDI keyboard or use your microphone to learn music notation interactively.">
     <meta property="twitter:image" content="https://bobpikaar.github.io/learn-notes/assets/og-image.png">
 
     <!-- PWA -->
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" href="assets/favicon.png">
     <meta name="theme-color" content="#0f172a">
-    
+
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
-    
+
     <!-- MIDI Polyfill for Safari -->
     <script src="https://cdn.jsdelivr.net/npm/jzz"></script>
     <script src="https://cdn.jsdelivr.net/npm/jzz-midi-gear"></script>
-    
+
     <script defer src="https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js"></script>
 </head>
 
@@ -85,6 +89,18 @@
                 <p class="range">C3 - C5</p>
                 <p class="description">Full range for both hands.</p>
             </div>
+            <div class="mode-card" onclick="startPractice('song-single')">
+                <div class="mode-icon">🎵</div>
+                <h3>Song Mode</h3>
+                <p class="range">Single Hand</p>
+                <p class="description">Play a short guided melody with one hand.</p>
+            </div>
+            <div class="mode-card" onclick="startPractice('song-both')">
+                <div class="mode-icon">🎶</div>
+                <h3>Song Mode</h3>
+                <p class="range">Both Hands</p>
+                <p class="description">Alternate between bass and treble notes.</p>
+            </div>
         </div>
 
         <section class="landing-settings" aria-labelledby="settings-heading">
@@ -114,7 +130,8 @@
                     <span class="indicator"></span>
                     <span class="text">Audio: Click to Start</span>
                 </div>
-                <button id="back-to-menu" class="btn-secondary" onclick="showLandingPage()" aria-label="Restart practice and back to menu">Restart</button>
+                <button id="back-to-menu" class="btn-secondary" onclick="showLandingPage()"
+                    aria-label="Restart practice and back to menu">Restart</button>
             </div>
         </header>
 

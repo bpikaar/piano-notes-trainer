@@ -4,6 +4,7 @@ export class MidiManager {
         /** @type {any} */
         this.midiAccess = null;
         this.onNoteCallback = onNoteCallback;
+        this.activeNotes = new Set();
     }
 
     async setup() {
@@ -50,7 +51,14 @@ export class MidiManager {
         const [command, note, velocity] = event.data;
         // Command 144 is Note On, velocity > 0
         if (command === 144 && velocity > 0) {
-            this.onNoteCallback(note);
+            this.activeNotes.add(note);
+            this.onNoteCallback(note, new Set(this.activeNotes));
+            return;
+        }
+
+        // Note Off can be sent as command 128, or Note On with velocity 0
+        if (command === 128 || (command === 144 && velocity === 0)) {
+            this.activeNotes.delete(note);
         }
     }
 }
