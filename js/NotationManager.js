@@ -13,19 +13,18 @@ export class NotationManager {
     renderNote(currentNote, settings = { showNoteNames: false, showFingering: false, isDualMode: false }) {
         const div = document.getElementById(this.elementId);
         if (!div || !currentNote) return;
-        
+
         div.innerHTML = ""; // Clear previous
 
         const renderer = new this.vf.Renderer(div, this.vf.Renderer.Backends.SVG);
         const isDual = settings.isDualMode;
-        
-        // Resize based on mode
+
         if (isDual) {
             renderer.resize(250, 250);
         } else {
-            renderer.resize(200, 150);
+            renderer.resize(200, 180);
         }
-        
+
         const context = renderer.getContext();
 
         let trebleStave, bassStave;
@@ -33,10 +32,10 @@ export class NotationManager {
 
         if (isDual) {
             // Render Grand Staff (both hands)
-            trebleStave = new this.vf.Stave(40, 40, 180);
+            trebleStave = new this.vf.Stave(40, 20, 180);
             trebleStave.addClef('treble').setContext(context).draw();
 
-            bassStave = new this.vf.Stave(40, 140, 180);
+            bassStave = new this.vf.Stave(40, 120, 180);
             bassStave.addClef('bass').setContext(context).draw();
 
             // Connect them with a bracket and brace
@@ -51,7 +50,8 @@ export class NotationManager {
             activeStave = currentNote.clef === 'treble' ? trebleStave : bassStave;
         } else {
             // Render Single Staff (normal mode)
-            activeStave = new this.vf.Stave(10, 40, 180);
+            // Move the staff slightly higher so low ledger lines (like low C) are visible.
+            activeStave = new this.vf.Stave(10, 30, 180);
             activeStave.addClef(currentNote.clef);
             activeStave.setContext(context).draw();
         }
