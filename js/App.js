@@ -150,7 +150,14 @@ export class App {
             return;
         }
 
-        const inputForCheck = (this.gameState.isDualMode && activeMidiNotes)
+        const expectsMultipleNotes = this.gameState.isDualMode || Array.isArray(this.gameState.currentNote?.midi);
+        // console.debug('handleNoteInput:', {
+        //     playedMidi,
+        //     activeMidiNotes: activeMidiNotes ? Array.from(activeMidiNotes) : null,
+        //     expectsMultipleNotes
+        // });
+
+        const inputForCheck = (expectsMultipleNotes && activeMidiNotes)
             ? Array.from(activeMidiNotes)
             : playedMidi;
         const result = this.gameState.checkNote(inputForCheck);

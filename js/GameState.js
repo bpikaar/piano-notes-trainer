@@ -1,4 +1,4 @@
-import { ALL_NOTES, PRACTICE_MODES, SONGS } from './constants.js';
+import { ALL_NOTES, CHORDS, PRACTICE_MODES, SONGS } from './constants.js';
 
 export class GameState {
     constructor() {
@@ -45,6 +45,12 @@ export class GameState {
             return;
         }
 
+        // Chord training mode uses a predefined set of chords instead of single notes
+        if (modeDef && modeDef.chord) {
+            this.filteredNotes = [...CHORDS];
+            return;
+        }
+
         this.filterNotes();
     }
 
@@ -87,6 +93,10 @@ export class GameState {
         // @ts-ignore
         const modeDef = PRACTICE_MODES[this.currentMode];
         if (!modeDef) return;
+        if (modeDef.chord) {
+            // Chord practice doesn't use the single-note filter
+            return;
+        }
 
         this.filteredNotes = ALL_NOTES.filter(n => {
             const isAccidental = !!n.accidental;
@@ -129,6 +139,7 @@ export class GameState {
                 name: `${trebleNote.name} + ${bassNote.name}`
             };
             this.noteStartTime = Date.now();
+            // console.debug('generateNextNote (dual):', this.currentNote);
             return this.currentNote;
         }
 
@@ -136,6 +147,7 @@ export class GameState {
         const randomIndex = Math.floor(Math.random() * this.filteredNotes.length);
         this.currentNote = this.filteredNotes[randomIndex];
         this.noteStartTime = Date.now();
+        // console.debug('generateNextNote:', this.currentNote);
         return this.currentNote;
     }
 
@@ -146,6 +158,20 @@ export class GameState {
         if (!this.currentNote) return { correct: false };
 
         const playedNotes = Array.isArray(playedMidi) ? playedMidi : [playedMidi];
+
+        // Determine what the app expects (single note, chord, or dual note)
+        const expected = [];
+        if (this.currentNote) {
+            if (Array.isArray(this.currentNote.midi)) {
+                expected.push(...this.currentNote.midi);
+            } else if (this.currentNote.dual) {
+                expected.push(this.currentNote.trebleNote?.midi, this.currentNote.bassNote?.midi);
+            } else {
+                expected.push(this.currentNote.midi);
+            }
+        }
+
+        // console.debug('checkNote: currentNote=', this.currentNote, 'expected=', expected, 'playedNotes=', playedNotes);
 
         if (this.isSongMode) {
             if (this.currentNote.dual) {
@@ -185,6 +211,35 @@ export class GameState {
 
             if (!playedNotes.includes(expectedTrebleMidi) || !playedNotes.includes(expectedBassMidi)) {
                 return { correct: false };
+            }
+
+            const responseTime = (Date.now() - this.noteStartTime) / 1000;
+            this.totalResponseTime += responseTime;
+            this.correctNotesCount++;
+            this.score++;
+
+            const avgTime = this.totalResponseTime / this.correctNotesCount;
+            return {
+                correct: true,
+                score: this.score,
+                avgTime: avgTime,
+                responseTime: responseTime
+            };
+        }
+
+        // Chord mode: expect a set of notes instead of a single note
+        if (Array.isArray(this.currentNote?.midi)) {
+            const expectedMidi = Array.from(new Set(this.currentNote.midi));
+            const playedSet = new Set(playedNotes);
+
+            if (playedSet.size !== expectedMidi.length) {
+                return { correct: false };
+            }
+
+            for (const midi of expectedMidi) {
+                if (!playedSet.has(midi)) {
+                    return { correct: false };
+                }
             }
 
             const responseTime = (Date.now() - this.noteStartTime) / 1000;

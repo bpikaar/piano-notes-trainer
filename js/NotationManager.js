@@ -73,14 +73,23 @@ export class NotationManager {
             activeStave.setContext(context).draw();
         }
 
+        const keys = currentNote.keys || [currentNote.key];
         const staveNote = new this.vf.StaveNote({
             clef: currentNote.clef,
-            keys: [currentNote.key],
+            keys,
             duration: "q"
         });
 
-        if (currentNote.accidental) {
-            staveNote.addModifier(new this.vf.Accidental(currentNote.accidental));
+        // Add accidentals for each key (supports chords)
+        if (Array.isArray(keys)) {
+            keys.forEach((key, idx) => {
+                // VexFlow key format is <note><optional accidental>/<octave>
+                // e.g. "b/4" (B natural) or "bb/4" (B flat).
+                const accidental = key.length > 1 ? key[1] : null;
+                if (accidental === '#' || accidental === 'b') {
+                    staveNote.addModifier(new this.vf.Accidental(accidental), idx);
+                }
+            });
         }
 
         // Add annotations if toggles are on

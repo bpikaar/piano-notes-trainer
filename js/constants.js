@@ -30,6 +30,16 @@ export const ALL_NOTES = [
     { key: 'c/4', midi: 60, name: 'C', finger: '1', clef: 'bass' }
 ];
 
+export const CHORDS = [
+    // Chords for training (root in treble clef)
+    { name: 'C', clef: 'treble', keys: ['c/4', 'e/4', 'g/4'], midi: [60, 64, 67] },
+    { name: 'D', clef: 'treble', keys: ['d/4', 'f/4', 'a/4'], midi: [62, 65, 69] },
+    { name: 'D#', clef: 'treble', keys: ['d/4', 'f#/4', 'a/4'], midi: [62, 66, 69] },
+    { name: 'F', clef: 'treble', keys: ['c/4', 'f/4', 'a/4'], midi: [60, 65, 69] },
+    { name: 'G', clef: 'treble', keys: ['b/3', 'd/4', 'g/4'], midi: [59, 62, 67] },
+    { name: 'Am', clef: 'treble', keys: ['c/4', 'e/4', 'a/4'], midi: [60, 64, 69] }
+];
+
 export const PRACTICE_MODES = {
     'rh-cg': { clef: 'treble', min: 60, max: 67 },
     'rh-cc': { clef: 'treble', min: 60, max: 72 },
@@ -37,6 +47,7 @@ export const PRACTICE_MODES = {
     'lh-cc': { clef: 'bass', min: 48, max: 60 },
     'both-cg': { dual: true, treble: { min: 60, max: 67 }, bass: { min: 48, max: 55 } },
     'both-cc': { dual: true, treble: { min: 60, max: 72 }, bass: { min: 48, max: 60 } },
+    'chords': { chord: true },
     'song-single': { song: true, dual: false },
     'song-both': { song: true, dual: true }
 };
