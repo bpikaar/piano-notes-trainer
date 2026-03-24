@@ -43,10 +43,13 @@ export const CHORDS = [
 export const PRACTICE_MODES = {
     'rh-cg': { clef: 'treble', min: 60, max: 67 },
     'rh-cc': { clef: 'treble', min: 60, max: 72 },
+    'rh-fc': { clef: 'treble', min: 65, max: 72 },
     'lh-cg': { clef: 'bass', min: 48, max: 55 },
     'lh-cc': { clef: 'bass', min: 48, max: 60 },
+    'lh-fc': { clef: 'bass', min: 53, max: 60 },
     'both-cg': { dual: true, treble: { min: 60, max: 67 }, bass: { min: 48, max: 55 } },
     'both-cc': { dual: true, treble: { min: 60, max: 72 }, bass: { min: 48, max: 60 } },
+    'both-fc': { dual: true, treble: { min: 65, max: 72 }, bass: { min: 53, max: 60 } },
     'chords': { chord: true },
     'song-single': { song: true, dual: false },
     'song-both': { song: true, dual: true }
