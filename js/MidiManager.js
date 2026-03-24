@@ -1,5 +1,5 @@
 export class MidiManager {
-    /** @param {(note: number) => void} onNoteCallback */
+    /** @param {(note: number, activeNotes?: Set<number>, meta?: { source: string; type: string; velocity: number; timestamp: number; note: number; }) => void} onNoteCallback */
     constructor(onNoteCallback) {
         /** @type {any} */
         this.midiAccess = null;
@@ -49,10 +49,17 @@ export class MidiManager {
     /** @param {any} event */
     handleMIDIMessage(event) {
         const [command, note, velocity] = event.data;
+        const timestamp = performance.now();
         // Command 144 is Note On, velocity > 0
         if (command === 144 && velocity > 0) {
             this.activeNotes.add(note);
-            this.onNoteCallback(note, new Set(this.activeNotes));
+            this.onNoteCallback(note, new Set(this.activeNotes), {
+                source: 'midi',
+                type: 'noteon',
+                velocity,
+                timestamp,
+                note
+            });
             return;
         }
 

@@ -12,6 +12,13 @@ export class AudioManager {
         this.onNoteCallback = onNoteCallback;
         /** @type {number | null} */
         this.lastDetectedNote = null;
+        /** @type {number | null} */
+        this.pendingDetectedNote = null;
+        this.pendingDetectionFrames = 0;
+        this.silenceFrames = 0;
+        this.minRms = 0.02;
+        this.minClarity = 0.9;
+        this.requiredStableFrames = 4;
     }
 
     async start() {
@@ -19,14 +26,14 @@ export class AudioManager {
             // @ts-ignore
             const AudioContextClass = window.AudioContext || window.webkitAudioContext;
             this.audioContext = new AudioContextClass();
-            
+
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
             const source = this.audioContext.createMediaStreamSource(stream);
-            
+
             this.analyser = this.audioContext.createAnalyser();
             this.analyser.fftSize = 2048;
             source.connect(this.analyser);
-            
+
             this.isAudioActive = true;
             this.startPitchDetection();
             return true;
@@ -44,16 +51,41 @@ export class AudioManager {
             }
 
             this.analyser.getFloatTimeDomainData(this.buf);
-            const freq = this.autoCorrelate(this.buf, this.audioContext.sampleRate);
+            const detection = this.autoCorrelate(this.buf, this.audioContext.sampleRate);
 
-            if (freq !== -1) {
-                const midiNote = this.noteFromPitch(freq);
-                if (midiNote !== this.lastDetectedNote) {
-                    this.lastDetectedNote = midiNote;
-                    this.onNoteCallback(midiNote);
+            if (detection) {
+                const midiNote = this.noteFromPitch(detection.frequency);
+                const isStableCandidate = detection.rms >= this.minRms
+                    && detection.clarity >= this.minClarity
+                    && detection.frequency >= 120
+                    && detection.frequency <= 1050;
+
+                if (isStableCandidate) {
+                    this.silenceFrames = 0;
+
+                    if (midiNote === this.pendingDetectedNote) {
+                        this.pendingDetectionFrames++;
+                    } else {
+                        this.pendingDetectedNote = midiNote;
+                        this.pendingDetectionFrames = 1;
+                    }
+
+                    if (this.pendingDetectionFrames >= this.requiredStableFrames && midiNote !== this.lastDetectedNote) {
+                        this.lastDetectedNote = midiNote;
+                        this.onNoteCallback(midiNote);
+                    }
+                } else {
+                    this.pendingDetectedNote = null;
+                    this.pendingDetectionFrames = 0;
                 }
             } else {
-                this.lastDetectedNote = null;
+                this.pendingDetectedNote = null;
+                this.pendingDetectionFrames = 0;
+                this.silenceFrames++;
+
+                if (this.silenceFrames >= 3) {
+                    this.lastDetectedNote = null;
+                }
             }
 
             requestAnimationFrame(update);
@@ -74,13 +106,15 @@ export class AudioManager {
         let SIZE = buf.length;
         let rms = 0;
         for (let i = 0; i < SIZE; i++) {
-            let val = buf[i];
+            const val = buf[i];
             rms += val * val;
         }
         rms = Math.sqrt(rms / SIZE);
-        if (rms < 0.01) return -1;
+        if (rms < this.minRms) return null;
 
-        let r1 = 0, r2 = SIZE - 1, thres = 0.2;
+        let r1 = 0;
+        let r2 = SIZE - 1;
+        const thres = 0.2;
         for (let i = 0; i < SIZE / 2; i++) {
             if (Math.abs(buf[i]) < thres) { r1 = i; break; }
         }
@@ -99,21 +133,39 @@ export class AudioManager {
 
         let d = 0;
         while (c[d] > c[d + 1]) d++;
-        let maxval = -1, maxpos = -1;
+        let maxval = -1;
+        let maxpos = -1;
         for (let i = d; i < SIZE; i++) {
             if (c[i] > maxval) {
                 maxval = c[i];
                 maxpos = i;
             }
         }
+        if (maxpos <= 0 || !Number.isFinite(maxval)) {
+            return null;
+        }
+
         let T0 = maxpos;
 
-        let x1 = c[T0 - 1], x2 = c[T0], x3 = c[T0 + 1];
-        let a = (x1 + x3 - 2 * x2) / 2;
-        let b = (x3 - x1) / 2;
+        const x1 = c[T0 - 1];
+        const x2 = c[T0];
+        const x3 = c[T0 + 1];
+        const a = (x1 + x3 - 2 * x2) / 2;
+        const b = (x3 - x1) / 2;
         if (a) T0 = T0 - b / (2 * a);
 
-        return sampleRate / T0;
+        if (!T0 || !Number.isFinite(T0)) {
+            return null;
+        }
+
+        const frequency = sampleRate / T0;
+        const clarity = c[0] ? maxval / c[0] : 0;
+
+        if (!Number.isFinite(frequency) || frequency <= 0) {
+            return null;
+        }
+
+        return { frequency, clarity, rms };
     }
 
     /** @param {number} frequency */

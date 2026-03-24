@@ -52,32 +52,77 @@ export const PRACTICE_MODES = {
     'song-both': { song: true, dual: true }
 };
 
+export const TRAINER_INPUT_SETTINGS = {
+    multiNoteSettleMs: 120,
+    retriggerBlockMs: 110,
+    noteSuccessDisplayMs: 650,
+    songAdvanceDelayMs: 450
+};
+
 export const SONGS = {
+    // Twinkle Twinkle Little Star
     'song-single': [
         { midi: 60, clef: 'treble' }, // C4
         { midi: 60, clef: 'treble' }, // C4
         { midi: 67, clef: 'treble' }, // G4
-        { midi: 67, clef: 'treble' }, // G4
+        { midi: 67, clef: 'treble', barAfter: true }, // G4
         { midi: 69, clef: 'treble' }, // A4
         { midi: 69, clef: 'treble' }, // A4
-        { midi: 67, clef: 'treble' }, // G4
+        { midi: 67, clef: 'treble', duration: 'h', barAfter: true }, // G4 (half note)
         { midi: 65, clef: 'treble' }, // F4
         { midi: 65, clef: 'treble' }, // F4
         { midi: 64, clef: 'treble' }, // E4
-        { midi: 64, clef: 'treble' }, // E4
+        { midi: 64, clef: 'treble', barAfter: true }, // E4
         { midi: 62, clef: 'treble' }, // D4
         { midi: 62, clef: 'treble' }, // D4
-        { midi: 60, clef: 'treble' }  // C4
+        { midi: 60, clef: 'treble', duration: 'h', barAfter: true }  // C4 (half note)
     ],
     'song-both': [
+        // Ode to Joy (simple two-hand version)
+        // Bar 1
+        { bassMidi: 48, trebleMidi: 64 }, // C3 + E4
+        { bassMidi: 48, trebleMidi: 64 }, // C3 + E4
+        { bassMidi: 55, trebleMidi: 65 }, // G3 + F4
+        { bassMidi: 55, trebleMidi: 67, barAfter: true }, // G3 + G4
+
+        // Bar 2
+        { bassMidi: 55, trebleMidi: 67 }, // G3 + G4
+        { bassMidi: 55, trebleMidi: 65 }, // G3 + F4
+        { bassMidi: 48, trebleMidi: 64 }, // C3 + E4
+        { bassMidi: 50, trebleMidi: 62, barAfter: true }, // D3 + D4
+
+        // Bar 3
+        { bassMidi: 48, trebleMidi: 60 }, // C3 + C4
         { bassMidi: 48, trebleMidi: 60 }, // C3 + C4
         { bassMidi: 50, trebleMidi: 62 }, // D3 + D4
-        { bassMidi: 52, trebleMidi: 64 }, // E3 + E4
-        { bassMidi: 53, trebleMidi: 65 }, // F3 + F4
-        { bassMidi: 55, trebleMidi: 67 }, // G3 + G4
-        { bassMidi: 53, trebleMidi: 65 }, // F3 + F4
-        { bassMidi: 52, trebleMidi: 64 }, // E3 + E4
+        { bassMidi: 48, trebleMidi: 64, barAfter: true }, // C3 + E4
+
+        // Bar 4
+        { bassMidi: 48, trebleMidi: 64 }, // C3 + E4
         { bassMidi: 50, trebleMidi: 62 }, // D3 + D4
-        { bassMidi: 48, trebleMidi: 60 }  // C3 + C4
+        { bassMidi: 50, trebleMidi: 62, duration: 'h', barAfter: true }, // D3 + D4
+
+        // Bar 5
+        { bassMidi: 48, trebleMidi: 64 }, // C3 + E4
+        { bassMidi: 48, trebleMidi: 64 }, // C3 + E4
+        { bassMidi: 55, trebleMidi: 65 }, // G3 + F4
+        { bassMidi: 55, trebleMidi: 67, barAfter: true }, // G3 + G4
+
+        // Bar 6
+        { bassMidi: 55, trebleMidi: 67 }, // G3 + G4
+        { bassMidi: 55, trebleMidi: 65 }, // G3 + F4
+        { bassMidi: 48, trebleMidi: 64 }, // C3 + E4
+        { bassMidi: 50, trebleMidi: 62, barAfter: true }, // D3 + D4
+
+        // Bar 7
+        { bassMidi: 48, trebleMidi: 60 }, // C3 + C4
+        { bassMidi: 48, trebleMidi: 60 }, // C3 + C4
+        { bassMidi: 50, trebleMidi: 62 }, // D3 + D4
+        { bassMidi: 48, trebleMidi: 64, barAfter: true }, // C3 + E4
+
+        // Bar 8
+        { bassMidi: 50, trebleMidi: 62 }, // D3 + D4
+        { bassMidi: 48, trebleMidi: 60 }, // C3 + C4
+        { bassMidi: 48, trebleMidi: 60, duration: 'h', barAfter: true }  // C3 + C4
     ]
 };

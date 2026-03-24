@@ -237,6 +237,23 @@ h1 {
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+.status-toggle {
+    color: var(--text-main);
+    cursor: pointer;
+    appearance: none;
+    font: inherit;
+}
+
+.status-toggle:hover {
+    border-color: rgba(255, 255, 255, 0.22);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.status-toggle:focus-visible {
+    outline: 2px solid rgba(99, 102, 241, 0.8);
+    outline-offset: 2px;
+}
+
 .indicator {
     width: 8px;
     height: 8px;
@@ -377,31 +394,6 @@ footer {
     border: 0;
 }
 
-/* Success Feedback Improvements */
-#staff-container {
-    position: relative;
-}
-
-.success-note-label {
-    position: absolute;
-    right: 15%;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 5rem;
-    font-weight: 700;
-    color: var(--accent-light);
-    opacity: 0;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    pointer-events: none;
-    text-shadow: 0 0 30px rgba(99, 102, 241, 0.6);
-    z-index: 10;
-}
-
-.success-note-label.visible {
-    opacity: 1;
-    right: 18%;
-}
-
 /* Branding Integration */
 .hero-logo {
     width: 120px;
@@ -515,10 +507,6 @@ footer {
         font-size: 1.5rem;
     }
 
-    .success-note-label {
-        font-size: 3.2rem;
-        right: 10%;
-    }
 
     .brand h1 {
         font-size: 1.2rem;

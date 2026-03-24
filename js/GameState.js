@@ -76,11 +76,20 @@ export class GameState {
                         trebleNote,
                         bassNote,
                         midi: [trebleNote.midi, bassNote.midi],
-                        name: `${trebleNote.name} + ${bassNote.name}`
+                        name: `${trebleNote.name} + ${bassNote.name}`,
+                        barAfter: !!songNote.barAfter,
+                        duration: songNote.duration || 'q'
                     };
                 }
 
                 const note = ALL_NOTES.find((n) => n.midi === songNote.midi && n.clef === songNote.clef);
+                if (note) {
+                    return {
+                        ...note,
+                        barAfter: !!songNote.barAfter,
+                        duration: songNote.duration || 'q'
+                    };
+                }
                 return note || null;
             })
             .filter((n) => !!n);
@@ -231,10 +240,6 @@ export class GameState {
         if (Array.isArray(this.currentNote?.midi)) {
             const expectedMidi = Array.from(new Set(this.currentNote.midi));
             const playedSet = new Set(playedNotes);
-
-            if (playedSet.size !== expectedMidi.length) {
-                return { correct: false };
-            }
 
             for (const midi of expectedMidi) {
                 if (!playedSet.has(midi)) {

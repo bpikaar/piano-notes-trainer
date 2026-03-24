@@ -132,16 +132,24 @@
                     <span class="indicator"></span>
                     <span class="text">Checking MIDI...</span>
                 </div>
-                <div id="audio-status" class="status-badge">
+                <button id="audio-status" class="status-badge status-toggle" type="button" aria-pressed="false"
+                    aria-label="Toggle microphone">
                     <span class="indicator"></span>
-                    <span class="text">Audio: Click to Start</span>
-                </div>
+                    <span class="text">Mic: Off</span>
+                </button>
                 <button id="back-to-menu" class="btn-secondary" onclick="showLandingPage()"
                     aria-label="Restart practice and back to menu">Restart</button>
             </div>
         </header>
 
         <section class="settings-panel" aria-label="Practice Settings">
+            <div class="toggle-group">
+                <label class="switch" aria-label="Show Correct Note Name Toggle">
+                    <input type="checkbox" id="toggle-correct-note-name" aria-labelledby="label-correct-note-name" checked>
+                    <span class="slider round"></span>
+                </label>
+                <span class="toggle-label" id="label-correct-note-name">Show Correct Note Name</span>
+            </div>
             <div class="toggle-group">
                 <label class="switch" aria-label="Show Note Names Toggle">
                     <input type="checkbox" id="toggle-note-names" aria-labelledby="label-note-names">
@@ -156,19 +164,11 @@
                 </label>
                 <span class="toggle-label" id="label-fingering">Show Fingering</span>
             </div>
-            <div class="toggle-group">
-                <label class="switch" aria-label="Enable Microphone Toggle">
-                    <input type="checkbox" id="toggle-microphone" aria-labelledby="label-microphone">
-                    <span class="slider round"></span>
-                </label>
-                <span class="toggle-label" id="label-microphone">Enable Microphone</span>
-            </div>
         </section>
 
         <main>
             <div id="staff-container">
                 <div id="staff"></div>
-                <div id="success-note-label" class="success-note-label"></div>
             </div>
 
             <div class="controls-panel">

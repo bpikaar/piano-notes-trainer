@@ -11,8 +11,7 @@ export class UIHandler {
             accidentalsToggle: document.getElementById('landing-toggle-accidentals'),
             noteNamesToggle: document.getElementById('toggle-note-names'),
             fingeringToggle: document.getElementById('toggle-fingering'),
-            microphoneToggle: document.getElementById('toggle-microphone'),
-            successNoteLabel: document.getElementById('success-note-label')
+            correctNoteNameToggle: document.getElementById('toggle-correct-note-name')
         };
     }
 
@@ -77,15 +76,16 @@ export class UIHandler {
         if (!this.elements.audioStatus) return;
         const text = this.elements.audioStatus.querySelector('.text');
         const indicator = this.elements.audioStatus.querySelector('.indicator');
+        this.elements.audioStatus.setAttribute('aria-pressed', isEnabled ? 'true' : 'false');
 
         if (isEnabled && isActive) {
-            if (text) text.textContent = 'Audio: On';
+            if (text) text.textContent = 'Mic: On';
             if (indicator) indicator.classList.add('connected');
         } else if (isEnabled && !isActive) {
-            if (text) text.textContent = 'Audio: Start...';
+            if (text) text.textContent = 'Mic: Starting...';
             if (indicator) indicator.classList.remove('connected');
         } else {
-            if (text) text.textContent = 'Audio: Off';
+            if (text) text.textContent = 'Mic: Off';
             if (indicator) indicator.classList.remove('connected');
         }
     }
@@ -95,28 +95,5 @@ export class UIHandler {
             return this.elements.accidentalsToggle.checked;
         }
         return false;
-    }
-
-    /** @param {boolean} enabled */
-    setMicrophoneToggle(enabled) {
-        if (this.elements.microphoneToggle instanceof HTMLInputElement) {
-            this.elements.microphoneToggle.checked = enabled;
-        }
-    }
-
-    /** @param {string} noteName */
-    showSuccessNote(noteName) {
-        const label = this.elements.successNoteLabel;
-        if (label) {
-            label.textContent = noteName;
-            label.classList.add('visible');
-        }
-    }
-
-    hideSuccessNote() {
-        const label = this.elements.successNoteLabel;
-        if (label) {
-            label.classList.remove('visible');
-        }
     }
 }
